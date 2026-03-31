@@ -26,7 +26,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AgendamentoService {
 
-    private final AgendadorHorariosApplication agendadorHorariosApplication;
 
     private final AgendamentoRepository agendamentoRepository;
     private final ServicoRepository servicoRepository;

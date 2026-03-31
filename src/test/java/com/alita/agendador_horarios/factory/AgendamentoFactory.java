@@ -23,7 +23,8 @@ public static Agendamento agendamentoConfirmado(
         agendamento.setDataHoraFim(
             inicio.plusMinutes(servico.getDuracaoEmMinutos())
         );
-        agendamento.setStatus(StatusAgendamento.CONFIRMADO);
+        agendamento.setStatus(StatusAgendamento.CRIADO);
+        agendamento.setId(1L);
         return agendamento;
     }
 }

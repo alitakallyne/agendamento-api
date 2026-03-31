@@ -5,6 +5,7 @@ import com.alita.agendador_horarios.infrastructure.entity.Profissional;
 public class ProfissionalFactory {
 public static Profissional profissionalAtivo() {
         Profissional profissional = new Profissional();
+        profissional.setId(1L);
         profissional.setNome("João da Silva");
         profissional.setEspecialidade("Corte Masculino");
         profissional.setTelefone("85988888888");

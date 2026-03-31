@@ -8,6 +8,7 @@ public class ServicoFactory {
 
     public static Servico servicoPadrao() {
         Servico servico = new Servico();
+        servico.setId(1L);
         servico.setNome("Corte de Cabelo");
         servico.setDescricao("Corte masculino tradicional");
         servico.setPreco(BigDecimal.valueOf(35.00));
