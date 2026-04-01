@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.alita.agendador_horarios.factory.AgendamentoFactory;
@@ -24,7 +23,7 @@ import com.alita.agendador_horarios.infrastructure.entity.Servico;
 
 import jakarta.persistence.EntityManager;
 
-@DataJpaTest
+
 @ActiveProfiles("test")
 public class AgendamentoRepositoryTest {
 

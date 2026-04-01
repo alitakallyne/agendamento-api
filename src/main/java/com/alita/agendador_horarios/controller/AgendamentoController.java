@@ -2,11 +2,13 @@ package com.alita.agendador_horarios.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +43,8 @@ public class AgendamentoController {
     })
     @PostMapping
     public ResponseEntity<AgendamentoResponse> salvarAgendamento(@RequestBody @Valid CriarAgendamentoRequest request) {
-        return ResponseEntity.accepted().body(AgendamentoResponse.fromEntity(
-                agendamentoService.salvarAgendamento(request)));
+        AgendamentoResponse response = AgendamentoResponse.fromEntity(agendamentoService.salvarAgendamento(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Operation(summary = "Deletar agendamento", description = "Remove um agendamento pelo ID")
@@ -122,3 +124,5 @@ public class AgendamentoController {
         return ResponseEntity.ok(atualizado);
     }
 }
+
+

@@ -114,11 +114,11 @@ public class AgendamentoServiceTest {
                 when(profissionalRepository.findById(1L)).thenReturn(Optional.of(profissional));
                 when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
 
-                // 🔥 ESSENCIAL
+         
                 when(horarioFuncionamentoRepository.findByDiaSemana(day))
                                 .thenReturn(Optional.of(HorarioFuncionamentoFactory.horarioPadrao(day)));
 
-                // 🔥 FORÇA CONFLITO
+           
                 when(agendamentoRepository
                                 .existsByProfissionalAndDataHoraInicioLessThanAndDataHoraFimGreaterThan(
                                                 any(), any(), any()))

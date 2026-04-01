@@ -10,6 +10,9 @@ import com.alita.agendador_horarios.infrastructure.entity.HorarioFuncionamento;
 import com.alita.agendador_horarios.infrastructure.entity.Profissional;
 import com.alita.agendador_horarios.infrastructure.entity.Servico;
 import com.alita.agendador_horarios.infrastructure.entity.StatusAgendamento;
+import com.alita.agendador_horarios.infrastructure.exceptions.AgendamentoConflictException;
+import com.alita.agendador_horarios.infrastructure.exceptions.AgendamentoInvalidException;
+import com.alita.agendador_horarios.infrastructure.exceptions.AgendamentoNotFoundException;
 import com.alita.agendador_horarios.infrastructure.repository.AgendamentoRepository;
 import com.alita.agendador_horarios.infrastructure.repository.ClienteRepository;
 import com.alita.agendador_horarios.infrastructure.repository.HorarioFuncionamentoRepository;
@@ -54,7 +57,7 @@ public class AgendamentoService {
         LocalDateTime fim = inicio.plusMinutes(servico.getDuracaoEmMinutos());
 
         if (inicio.isBefore(LocalDateTime.now())) {
-            throw new RuntimeException(
+            throw new AgendamentoInvalidException(
                     "Não é possível agendar para um horário no passado");
         }
 
@@ -64,7 +67,7 @@ public class AgendamentoService {
                 .existsByProfissionalAndDataHoraInicioLessThanAndDataHoraFimGreaterThan(
                         profissional, fim, inicio);
         if (profissionalDisponivel) {
-            throw new RuntimeException("Profissional não está disponível nesse horário");
+            throw new  AgendamentoConflictException("Profissional não está disponível nesse horário");
         }
 
         Agendamento agendamento = new Agendamento();
@@ -108,7 +111,7 @@ public class AgendamentoService {
 
     public void deletarAgendamento(Long id) {
         Agendamento agendamento = agendamentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
+                .orElseThrow(() -> new AgendamentoNotFoundException("Agendamento não encontrado"));
 
         if (agendamento.getStatus() == StatusAgendamento.CONFIRMADO) {
             throw new RuntimeException("gendamento concluído não pode ser excluído");
@@ -140,7 +143,7 @@ public class AgendamentoService {
     public void atualizarStatus(Long id, StatusAgendamento novoStatus) {
 
         Agendamento agendamento = agendamentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
+                .orElseThrow(() -> new AgendamentoNotFoundException("Agendamento não encontrado"));
 
         if (agendamento.getStatus() == StatusAgendamento.CONFIRMADO) {
             throw new RuntimeException("Agendamento já foi concluído");
@@ -157,7 +160,7 @@ public class AgendamentoService {
 
     public Agendamento atualizarHorario(Long id, LocalDateTime data) {
     Agendamento agendamento = agendamentoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
+            .orElseThrow(() -> new AgendamentoNotFoundException("Agendamento não encontrado"));
 
     if (agendamento.getStatus() != StatusAgendamento.CRIADO) {
         throw new RuntimeException(
@@ -184,7 +187,7 @@ public class AgendamentoService {
             );
 
     if (conflito) {
-        throw new RuntimeException(
+        throw new AgendamentoConflictException(
                 "Profissional não está disponível nesse novo horário");
     }
 
