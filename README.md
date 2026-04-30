@@ -41,14 +41,15 @@ Este projeto não é apenas CRUD — ele possui validações reais:
 
 # 🚀 ⚙️ Tecnologias Utilizadas
 
-* ☕ Java 17
-* 🌱 Spring Boot
-* 🛡️ Spring Validation
-* 🧪 JUnit 5
-* 🎭 Mockito
-* 🗄️ H2 Database (ambiente local)
-* 🛠 Maven
-
+- ☕ Java 17  
+- 🌱 Spring Boot  
+- 🗄️ PostgreSQL (produção)  
+- 🧪 H2 Database (dev/test)  
+- 🔄 Flyway (versionamento de banco)  
+- 🐳 Docker + Docker Compose  
+- 🤖 CI/CD com GitHub Actions  
+- 🛠 Maven  
+- 🧪 JUnit 5 + Mockito  
 ---
 
 # 🧪 🔬 Testes Unitários
@@ -64,7 +65,6 @@ O projeto possui testes unitários focados na **camada de serviço**, validando 
 ### ⚠️ Observação
 
 Os testes estão em evolução e fazem parte do processo de aprendizado.
-Testes de controller serão implementados após estabilização dos testes de serviço.
 
 ---
 
@@ -110,7 +110,6 @@ cd agendamento-api
 ```
 
 ---
-
 # 🌐 🧪 Testando a API
 
 Após subir a aplicação:
@@ -119,18 +118,50 @@ Após subir a aplicação:
 http://localhost:8080/agendamentos
 ```
 
-Você pode testar via:
 
-* Postman
-* Insomnia
+# 🐳 📦 Execução com Docker
+
+```bash
+docker-compose up --build
+```
+A aplicação estará disponível em:
+```
+http://localhost:8080
+```
+
+Você pode testar via:
 * Swagger 
 
 ---
 
+🧬 🗄️ Versionamento de Banco
+
+O projeto utiliza Flyway para controle de schema.
+
+As migrations ficam em:
+```
+src/main/resources/db/migration
+```
+Exemplo:
+```
+V1__create_tables.sql
+```
+🤖 🔄 CI/CD
+
+Pipeline automatizado com GitHub Actions:
+
+Build da aplicação
+Criação da imagem Docker
+Push para o Docker Hub
+
+Imagem publicada:
+```
+b13alita/agendador-horarios:latest
+```
+
 # 💡 📈 Melhorias Futuras
 
 * 🔐 Autenticação e autorização (JWT)
-* 📦 Dockerização
 * ☁️ Deploy em nuvem
 
 ---
